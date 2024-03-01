@@ -1,29 +1,28 @@
 # mypackage/__init__.py
 import requests
 
-class MyPackage:
-    def __init__(self, url, data):
-        self.url = url
-        self.data = data
+class Yojn:
+    def __init__(self, url):
+        self.base_url = url
+    
+    def _make_request(self, endpoint, config):
+        try:
+            url = f"{self.base_url}/{endpoint}"
+            response = requests.post(url, **config)
+            response.raise_for_status()
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Error during {endpoint} API call:", e)
+            raise
 
-    def initYojn(self):
-        response = requests.post(self.url, json=self.data)
-        return response.json()
+    def initializeYojn(self, config):
+        return self._make_request("initializeYojn", config)
 
-    def runYojn(self, url, data):
-        response = requests.post(url, json=data)
-        return response.json()
+    def completion(self, config):
+        return self._make_request("runYojn", config)
 
-    def uploadFile(self, url, file_path):
-        files = {'file': open(file_path, 'rb')}
-        response = requests.post(url, files=files)
-        return response.json()
-
-    def userHistory(self, url, user_id):
-        params = {'userId': user_id}
-        response = requests.get(url, params=params)
-        return response.json()
-
-    def updateUserFeedback(self, url, feedback):
-        response = requests.put(url, json=feedback)
-        return response.json()
+    def historyYojn(self, config):
+        return self._make_request("userHistory", config)
+    
+    def updateFeedback(self,config):
+        return self._make_request("updateUserFeedback",config)

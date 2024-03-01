@@ -1,0 +1,11 @@
+#fine tune model
+class FineTune(db.Model):
+    fineTuneCreationId = db.Column(db.Text, primary_key=True) #pk for DB generated in rlhf backend uuid4
+    fineTuneId = db.Column(db.Text) #given by fine tune service also its object id
+    projectId = db.Column(db.Text)
+    projectVersion=db.Column(db.Text)
+    appId=db.Column(db.Text)
+    appConfig=db.Column(db.Text)
+    fineTuneStatus = db.Column(db.Text) #eg: pending , completed etc
+    details = db.Column(db.Text) #futuristic
+    createdAt = db.Column(db.TIMESTAMP, server_default=db.func.now())
