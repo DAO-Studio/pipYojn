@@ -1,7 +1,7 @@
 # mypackage/__init__.py
 import requests
 
-class Yojn:
+class yojn:
     def __init__(self, url):
         self.base_url = url
     
